@@ -17,7 +17,7 @@ int main()
 {
     float_t temp;
 
-    // init 
+    // init m2, m2 should be in cache
     for (auto& v : m2) {
         std::fill(std::begin(v), std::end(v), -1);
     }
@@ -25,7 +25,6 @@ int main()
     // unsync the I/O of C and C++. 
     std::ios_base::sync_with_stdio(false);
 
-    // see https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/
     auto start = std::chrono::high_resolution_clock::now();
 
     for (int t = 0; t < TIME_LOOP; ++t)
@@ -34,7 +33,7 @@ int main()
         {
             for (int j = 0; j < N; ++j)
             {
-                temp = m1[j][i];
+                temp = m1[j][i];    //loop over m1, that shouldn't be in the cache
             }
         }
     }
@@ -50,7 +49,7 @@ int main()
     std::cout << " sec" << std::endl;
 
 
-    // init 
+    // init, m1 
     for (auto& v : m1) {
         std::fill(std::begin(v), std::end(v), -1);
     }
@@ -65,7 +64,7 @@ int main()
         {
             for (int j = 0; j < N; ++j)
             {
-                temp = m2[i][j];
+                temp = m2[i][j];    // loop over m2, m1 in cache
             }
         }
     }
